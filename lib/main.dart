@@ -1,3 +1,4 @@
+import 'package:cozy_app/pages/Home.dart';
 import 'package:cozy_app/pages/Splash.dart';
 import 'package:flutter/material.dart';
 
@@ -15,6 +16,6 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: ThemeData(fontFamily: 'Poppins'),
-        home: const Splash());
+        home: const Home());
   }
 }
