@@ -1,7 +1,9 @@
 import 'package:cozy_app/model/city.dart';
+import 'package:cozy_app/model/guidance.dart';
 import 'package:cozy_app/model/recomended.dart';
 import 'package:cozy_app/theme.dart';
 import 'package:cozy_app/widget/city_card.dart';
+import 'package:cozy_app/widget/guidance_card.dart';
 import 'package:cozy_app/widget/recomended_card.dart';
 import 'package:cozy_app/widget/section_label.dart';
 import 'package:flutter/material.dart';
@@ -109,7 +111,24 @@ class Home extends StatelessWidget {
                 ),
               ],
             ),
-          )
+          ),
+
+          // * Tips & Guidance
+          const SectionLabel(title: 'Tips & Guidance'),
+          const SizedBox(height: 16),
+          GuidanceCard(
+              guidance: Guidance(
+                  id: 1,
+                  name: 'City Guidlines',
+                  imageUrl: 'assets/icons/ic_guidlines.png',
+                  datetime: '20 Apr')),
+          GuidanceCard(
+              guidance: Guidance(
+                  id: 2,
+                  name: 'Jakarta Fairship',
+                  imageUrl: 'assets/icons/ic_jakarta_fairship.png',
+                  datetime: '11 Dec')),
+          const SizedBox(height: 30)
         ],
       )),
     );
