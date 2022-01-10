@@ -2,6 +2,7 @@ import 'package:cozy_app/model/city.dart';
 import 'package:cozy_app/model/guidance.dart';
 import 'package:cozy_app/model/recomended.dart';
 import 'package:cozy_app/theme.dart';
+import 'package:cozy_app/widget/bottom_navbar.dart';
 import 'package:cozy_app/widget/city_card.dart';
 import 'package:cozy_app/widget/guidance_card.dart';
 import 'package:cozy_app/widget/recomended_card.dart';
@@ -14,6 +15,27 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: Container(
+        height: 60,
+        margin: const EdgeInsets.symmetric(horizontal: 24),
+        padding: const EdgeInsets.symmetric(horizontal: 30),
+        decoration: BoxDecoration(
+            color: grayColor, borderRadius: BorderRadius.circular(23)),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: const [
+            BottomNavbar(
+                imageUrl: 'assets/icons/ic_home_on.png', isActive: true),
+            BottomNavbar(
+                imageUrl: 'assets/icons/ic_mail_off.png', isActive: false),
+            BottomNavbar(
+                imageUrl: 'assets/icons/ic_card_off.png', isActive: false),
+            BottomNavbar(
+                imageUrl: 'assets/icons/ic_love_off.png', isActive: false),
+          ],
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: SafeArea(
           child: ListView(
         children: [
@@ -75,7 +97,7 @@ class Home extends StatelessWidget {
           const SectionLabel(title: 'Recomended Space'),
           const SizedBox(height: 16),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 24),
+            padding: const EdgeInsets.symmetric(horizontal: 24),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -128,7 +150,7 @@ class Home extends StatelessWidget {
                   name: 'Jakarta Fairship',
                   imageUrl: 'assets/icons/ic_jakarta_fairship.png',
                   datetime: '11 Dec')),
-          const SizedBox(height: 30)
+          const SizedBox(height: 70)
         ],
       )),
     );
