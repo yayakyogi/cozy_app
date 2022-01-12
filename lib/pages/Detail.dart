@@ -1,9 +1,17 @@
+import 'package:cozy_app/model/recommended.dart';
 import 'package:cozy_app/theme.dart';
+import 'package:cozy_app/widget/facilities.dart';
 import 'package:flutter/material.dart';
 
-class Detail extends StatelessWidget {
-  const Detail({Key? key}) : super(key: key);
+class Detail extends StatefulWidget {
+  final Recommended recommended;
+  const Detail(this.recommended, {Key? key}) : super(key: key);
 
+  @override
+  State<Detail> createState() => _DetailState();
+}
+
+class _DetailState extends State<Detail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,16 +21,18 @@ class Detail extends StatelessWidget {
           // * Image
           Container(
             width: double.infinity,
-            child: Image.asset(
-              'assets/images/img-popular-3.png',
+            child: Image.network(
+              widget.recommended.imageUrl,
+              height: 330,
               fit: BoxFit.fill,
             ),
           ),
+
           // * Detail
           Container(
             child: ListView(
               children: [
-                const SizedBox(height: 330),
+                const SizedBox(height: 300),
                 Container(
                   width: double.infinity,
                   decoration: const BoxDecoration(
@@ -44,7 +54,7 @@ class Detail extends StatelessWidget {
                               children: [
                                 // * Title
                                 Text(
-                                  'Kuretakeso Hott',
+                                  widget.recommended.name,
                                   style: fw_500.copyWith(
                                       color: blackColor, fontSize: 22),
                                 ),
@@ -53,7 +63,7 @@ class Detail extends StatelessWidget {
                                 RichText(
                                   text: TextSpan(children: [
                                     TextSpan(
-                                        text: '\$52',
+                                        text: '\$ ${widget.recommended.price}',
                                         style: fw_500.copyWith(
                                             color: purpleColor, fontSize: 16)),
                                     TextSpan(
@@ -78,6 +88,7 @@ class Detail extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 30),
+
                       // * Main Facilities
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 24),
@@ -93,76 +104,29 @@ class Detail extends StatelessWidget {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                // * Kitchen
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Image.asset('assets/icons/ic_kitchen.png',
-                                        width: 32),
-                                    const SizedBox(height: 8),
-                                    RichText(
-                                      text: TextSpan(children: [
-                                        TextSpan(
-                                            text: '2',
-                                            style: fw_500.copyWith(
-                                                color: purpleColor)),
-                                        TextSpan(
-                                            text: ' Kitchen',
-                                            style: fw_300.copyWith(
-                                                color: greyColor)),
-                                      ]),
-                                    ),
-                                  ],
-                                ),
-                                // * Bedroom
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Image.asset('assets/icons/ic_bedroom.png',
-                                        width: 32),
-                                    const SizedBox(height: 8),
-                                    RichText(
-                                      text: TextSpan(children: [
-                                        TextSpan(
-                                            text: '3',
-                                            style: fw_500.copyWith(
-                                                color: purpleColor)),
-                                        TextSpan(
-                                            text: ' Bedroom',
-                                            style: fw_300.copyWith(
-                                                color: greyColor)),
-                                      ]),
-                                    ),
-                                  ],
-                                ),
-                                // * Big Lemari
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Image.asset(
-                                        'assets/icons/ic_big_lemari.png',
-                                        width: 32),
-                                    const SizedBox(height: 8),
-                                    RichText(
-                                      text: TextSpan(children: [
-                                        TextSpan(
-                                            text: '3',
-                                            style: fw_500.copyWith(
-                                                color: purpleColor)),
-                                        TextSpan(
-                                            text: ' Big Lemari',
-                                            style: fw_300.copyWith(
-                                                color: greyColor)),
-                                      ]),
-                                    ),
-                                  ],
-                                ),
+                                Facilities(
+                                    title: 'Kitchen',
+                                    icons: 'assets/icons/ic_kitchen.png',
+                                    total: widget.recommended.numberOfKitchens
+                                        .toString()),
+                                Facilities(
+                                    title: 'Bedroom',
+                                    icons: 'assets/icons/ic_bedroom.png',
+                                    total: widget.recommended.numberOfBedrooms
+                                        .toString()),
+                                Facilities(
+                                    title: 'Big Lemari',
+                                    icons: 'assets/icons/ic_big_lemari.png',
+                                    total: widget.recommended.numberOfCupBoards
+                                        .toString()),
                               ],
                             )
                           ],
                         ),
                       ),
                       const SizedBox(height: 30),
+
+                      // * Photos
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 24),
                         child: Text(
@@ -174,50 +138,24 @@ class Detail extends StatelessWidget {
                       Container(
                         height: 88,
                         child: ListView(
-                          scrollDirection: Axis.horizontal,
-                          children: [
-                            const SizedBox(width: 24),
-                            // * Image 1
-                            Container(
-                              margin: const EdgeInsets.only(right: 18),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(16),
-                                child: Image.asset(
-                                  'assets/images/img-popular-1.png',
-                                  width: 110,
-                                  height: 88,
+                            scrollDirection: Axis.horizontal,
+                            children: widget.recommended.photos!.map((item) {
+                              return Container(
+                                margin: const EdgeInsets.only(left: 18),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(16),
+                                  child: Image.network(
+                                    item,
+                                    width: 110,
+                                    height: 88,
+                                  ),
                                 ),
-                              ),
-                            ),
-                            // * Image 2
-                            Container(
-                              margin: const EdgeInsets.only(right: 18),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(16),
-                                child: Image.asset(
-                                  'assets/images/img-popular-2.png',
-                                  width: 110,
-                                  height: 88,
-                                ),
-                              ),
-                            ),
-                            // * Image 3
-                            Container(
-                              margin: const EdgeInsets.only(right: 18),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(16),
-                                child: Image.asset(
-                                  'assets/images/img-popular-3.png',
-                                  width: 110,
-                                  height: 88,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(width: 24)
-                          ],
-                        ),
+                              );
+                            }).toList()),
                       ),
                       const SizedBox(height: 30),
+
+                      // * Location
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 24),
                         child: Row(
@@ -235,7 +173,7 @@ class Detail extends StatelessWidget {
                                 SizedBox(
                                   width: 213,
                                   child: Text(
-                                    'Jln. Kappan Sukses No. 20 Palembang',
+                                    widget.recommended.address,
                                     style: fw_400.copyWith(color: greyColor),
                                   ),
                                 )
@@ -250,6 +188,8 @@ class Detail extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 40),
+
+                      // * Button
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 24),
                         child: Container(
@@ -280,7 +220,7 @@ class Detail extends StatelessWidget {
               left: 24,
               child: InkWell(
                 onTap: () {
-                  print('Back');
+                  Navigator.pop(context);
                 },
                 child: Image.asset(
                   'assets/icons/ic_arrow_back.png',
