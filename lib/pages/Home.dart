@@ -1,19 +1,23 @@
 import 'package:cozy_app/model/city.dart';
 import 'package:cozy_app/model/guidance.dart';
-import 'package:cozy_app/model/recomended.dart';
+import 'package:cozy_app/model/recommended.dart';
+import 'package:cozy_app/provider/recommended_provider.dart';
 import 'package:cozy_app/theme.dart';
 import 'package:cozy_app/widget/bottom_navbar.dart';
 import 'package:cozy_app/widget/city_card.dart';
 import 'package:cozy_app/widget/guidance_card.dart';
-import 'package:cozy_app/widget/recomended_card.dart';
+import 'package:cozy_app/widget/recommended_card.dart';
 import 'package:cozy_app/widget/section_label.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var recommendedProvider = Provider.of<RecommendedProvider>(context);
+
     return Scaffold(
       floatingActionButton: Container(
         height: 60,
@@ -98,40 +102,21 @@ class Home extends StatelessWidget {
           const SizedBox(height: 16),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                RecomendedCard(
-                  recomended: Recomended(
-                      id: 1,
-                      price: 52,
-                      rate: 4,
-                      name: 'Kuretakeso Hott',
-                      city: 'Bogor',
-                      country: 'Indonesia',
-                      imageUrl: 'assets/images/img-popular-3.png'),
-                ),
-                RecomendedCard(
-                  recomended: Recomended(
-                      id: 2,
-                      price: 40,
-                      rate: 3,
-                      name: 'Roemah Nenek',
-                      city: 'Bandung',
-                      country: 'Indonesia',
-                      imageUrl: 'assets/images/img-popular-4.png'),
-                ),
-                RecomendedCard(
-                  recomended: Recomended(
-                      id: 3,
-                      price: 30,
-                      rate: 4,
-                      name: 'Darrling How',
-                      city: 'Jakarta',
-                      country: 'Indonesia',
-                      imageUrl: 'assets/images/img-popular-5.png'),
-                ),
-              ],
+            child: FutureBuilder(
+              future: recommendedProvider.getRecommendedSpace(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  List<Recommended> data = snapshot.data as List<Recommended>;
+                  return Column(
+                    children: data.map((item) {
+                      return Container(
+                        child: RecommendedCard(item),
+                      );
+                    }).toList(),
+                  );
+                }
+                return const Center(child: CircularProgressIndicator());
+              },
             ),
           ),
 
