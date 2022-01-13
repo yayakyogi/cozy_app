@@ -2,6 +2,7 @@ import 'package:cozy_app/model/recommended.dart';
 import 'package:cozy_app/theme.dart';
 import 'package:cozy_app/widget/facilities.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Detail extends StatefulWidget {
   final Recommended recommended;
@@ -179,10 +180,15 @@ class _DetailState extends State<Detail> {
                                 )
                               ],
                             ),
-                            Image.asset(
-                              'assets/icons/ic_location.png',
-                              width: 40,
-                              height: 40,
+                            InkWell(
+                              onTap: () {
+                                launch(widget.recommended.mapUrl);
+                              },
+                              child: Image.asset(
+                                'assets/icons/ic_location.png',
+                                width: 40,
+                                height: 40,
+                              ),
                             )
                           ],
                         ),
@@ -190,20 +196,25 @@ class _DetailState extends State<Detail> {
                       const SizedBox(height: 40),
 
                       // * Button
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 24),
-                        child: Container(
-                          width: double.infinity,
-                          height: 50,
-                          decoration: BoxDecoration(
-                              color: purpleColor,
-                              borderRadius: BorderRadius.circular(17)),
-                          child: Center(
-                              child: Text(
-                            'Book Now',
-                            style: fw_500.copyWith(
-                                color: whiteColor, fontSize: 18),
-                          )),
+                      InkWell(
+                        onTap: () {
+                          launch('tel:${widget.recommended.phone}');
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 24),
+                          child: Container(
+                            width: double.infinity,
+                            height: 50,
+                            decoration: BoxDecoration(
+                                color: purpleColor,
+                                borderRadius: BorderRadius.circular(17)),
+                            child: Center(
+                                child: Text(
+                              'Book Now',
+                              style: fw_500.copyWith(
+                                  color: whiteColor, fontSize: 18),
+                            )),
+                          ),
                         ),
                       ),
                       const SizedBox(
