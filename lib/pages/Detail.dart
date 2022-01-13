@@ -1,6 +1,7 @@
 import 'package:cozy_app/model/recommended.dart';
 import 'package:cozy_app/theme.dart';
 import 'package:cozy_app/widget/facilities.dart';
+import 'package:cozy_app/widget/rating.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -77,14 +78,11 @@ class _DetailState extends State<Detail> {
                             ),
                             // * Rating
                             Row(
-                              children: const [
-                                Icon(Icons.star, color: orangeColor),
-                                Icon(Icons.star, color: orangeColor),
-                                Icon(Icons.star, color: orangeColor),
-                                Icon(Icons.star, color: orangeColor),
-                                Icon(Icons.star, color: greyColor),
-                              ],
-                            )
+                                children: [1, 2, 3, 4, 5]
+                                    .map((item) => Rating(
+                                        index: item,
+                                        rate: widget.recommended.rate))
+                                    .toList())
                           ],
                         ),
                       ),
