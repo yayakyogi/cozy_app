@@ -1,3 +1,4 @@
+import 'package:cozy_app/pages/Home.dart';
 import 'package:cozy_app/theme.dart';
 import 'package:flutter/material.dart';
 
@@ -31,7 +32,8 @@ class Splash extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Image.asset(
-                  'assets/images/logo.png',
+                  'assets/icons/ic_logo.png',
+                  height: 50,
                   width: 50,
                 ),
                 const SizedBox(height: 30),
@@ -45,16 +47,22 @@ class Splash extends StatelessWidget {
                   style: fw_300.copyWith(color: greyColor, fontSize: 16),
                 ),
                 const SizedBox(height: 40),
-                Container(
-                  width: 210,
-                  height: 50,
-                  decoration: BoxDecoration(
-                      color: purpleColor,
-                      borderRadius: BorderRadius.circular(17)),
-                  child: Center(
-                    child: Text(
-                      'Explore Now',
-                      style: fw_500.copyWith(color: whiteColor, fontSize: 18),
+                InkWell(
+                  onTap: () {
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) => Home()));
+                  },
+                  child: Container(
+                    width: 210,
+                    height: 50,
+                    decoration: BoxDecoration(
+                        color: purpleColor,
+                        borderRadius: BorderRadius.circular(17)),
+                    child: Center(
+                      child: Text(
+                        'Explore Now',
+                        style: fw_500.copyWith(color: whiteColor, fontSize: 18),
+                      ),
                     ),
                   ),
                 ),
