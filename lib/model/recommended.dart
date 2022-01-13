@@ -1,7 +1,7 @@
 class Recommended {
   int? id;
   int? price;
-  int? rate;
+  late int rate;
   late String name;
   late String imageUrl;
   late String city;
@@ -17,11 +17,11 @@ class Recommended {
   Recommended(
       {required this.id,
       required this.price,
-      required this.rate,
       required this.name,
       required this.imageUrl,
       required this.city,
       required this.country,
+      this.rate = 0,
       this.address = '',
       this.phone = '',
       this.mapUrl = '',
